@@ -1,4 +1,4 @@
-import { storage } from "./firebaseConfig.js";
+import { storage } from "./firebaseconfig.js";
 import {
   ref,
   listAll,
