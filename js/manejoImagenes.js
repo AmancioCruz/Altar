@@ -1,22 +1,56 @@
-import { storage } from "./firebaseconfig.js";
+import { storage } from "./firebaseConfig.js";
 import {
   ref,
+  listAll,
   getDownloadURL
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
-const referencia = ref(storage, "Imagenes/fotografia.png");
+const carpeta = ref(storage, "Imagenes/");
 
-async function mostrarImagen() {
+const contenedor = document.querySelector("#contenedor_imagen");
+const imagen = document.querySelector("#fotografia");
+
+let imagenes = [];  
+let indiceActual = 0;
+
+async function cargarImagenes() {
   try {
-    const imagen = document.querySelector("#fotografia");
-     const url= await getDownloadURL(referencia);
-     imagen.src = url;
+    const lista = await listAll(carpeta);
 
+    imagenes = await Promise.all(
+      lista.items.map(async (item) => await getDownloadURL(item))
+    );
+
+    if (imagenes.length === 0) {
+      console.warn("⚠️ No hay imágenes en la carpeta 'Imagenes'");
+      imagen.src = "recursos/imagen.png"; 
+      return;
+    }
+
+    console.log(`✅ Se encontraron ${imagenes.length} imágenes.`);
+    indiceActual = 0;
+    mostrarImagenActual();
+
+    setInterval(cambiarImagen, 10000);
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error al cargar las imágenes:", error);
+    imagen.src = "recursos/imagen.png";
   }
 }
 
-setInterval(mostrarImagen, 3000);
+function mostrarImagenActual() {
+  if (imagenes.length > 0) {
+    imagen.src = `${imagenes[indiceActual]}?t=${Date.now()}`;
+  }
+}
 
-mostrarImagen();
+function cambiarImagen() {
+  if (imagenes.length === 0) return;
+
+  indiceActual = (indiceActual + 1) % imagenes.length;
+  mostrarImagenActual();
+
+  console.log("🔄 Imagen cambiada:", indiceActual + 1);
+}
+
+cargarImagenes();
