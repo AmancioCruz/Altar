@@ -12,7 +12,7 @@ let imagenes = [];
 let indiceActual = 0;
 let ultimaCantidad = 0;
 
-const TIEMPO_CAMBIO = 15000;   // 15 segundos entre imágenes
+const TIEMPO_CAMBIO = 10000;   // 15 segundos entre imágenes
 const TIEMPO_REVISION = 60000; // 1 minuto para revisar nuevas imágenes
 
 // --------------------------------------------------------------------------
