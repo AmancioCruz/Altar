@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .contenedor-imagen {
     position: fixed;
     top: 0;
@@ -6,14 +12,25 @@
     height: 100vh;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 30px;
     z-index: 1000;
+    overflow: hidden;
 }
 
+.logo {
+    width: 25%;
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 0 10px rgba(0, 162, 255, 0.5));
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+
 #fotografia {
-    max-width: 95%;
-    max-height: 95%;
+    max-width: 80vh;
+    max-height: 80vw;
     object-fit: contain;
     border: 3px solid #ff6b00;
     border-radius: 10px;
@@ -21,11 +38,9 @@
         0 0 30px rgba(255, 107, 0, 0.5),
         0 0 60px rgba(0, 162, 255, 0.3);
     transform: rotate(-90deg);
-}
-
-/* Efectos de borde con colores del tema */
-#fotografia {
     position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 #fotografia::before {
@@ -38,4 +53,11 @@
     border: 2px solid #00a2ff;
     border-radius: 12px;
     z-index: -1;
+}
+
+#fotografia:hover {
+    box-shadow: 
+        0 0 40px rgba(255, 140, 0, 0.6),
+        0 0 80px rgba(0, 200, 255, 0.4);
+    transform: rotate(-90deg) scale(1.03);
 }
