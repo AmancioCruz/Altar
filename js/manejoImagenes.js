@@ -31,7 +31,7 @@ async function cargarImagenes() {
     indiceActual = 0;
     mostrarImagenActual();
 
-    setInterval(cambiarImagen, 20000);
+    setInterval(cambiarImagen, 25000);
   } catch (error) {
     console.error("❌ Error al cargar las imágenes:", error);
     imagen.src = "recursos/imagen.png";
